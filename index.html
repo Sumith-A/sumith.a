@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All One Radio — Tamil FM Dial</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="room">
+  <!-- ==================== RADIO CONSOLE ==================== -->
+  <div class="console">
+    <div class="screw tl"></div><div class="screw tr"></div><div class="screw bl"></div><div class="screw br"></div>
+
+    <header class="console-head">
+      <div class="brand">
+        <span class="brand-mark">➲</span>
+        ALL ONE <b>RADIO</b>
+      </div>
+      <div class="model-plate">
+        <span>TAMIL FM TUNER</span>
+        <span class="model-no">MODEL SR-548 · STEREO</span>
+      </div>
+    </header>
+
+    <!-- Tuning dial -->
+    <section class="dial-panel">
+      <div class="dial-window" id="dialWindow" tabindex="0" role="slider"
+           aria-label="Tuning dial" aria-valuemin="1" aria-valuemax="548" aria-valuenow="1">
+        <div class="dial-backlight"></div>
+        <div class="dial-scale" id="dialScale"></div>
+        <div class="dial-labels" id="dialLabels"></div>
+        <div class="needle" id="needle"><span class="needle-tip"></span></div>
+        <div class="dial-hint">◄ drag to tune ►</div>
+      </div>
+
+      <div class="readout">
+        <div class="freq-block">
+          <div class="freq" id="freqReadout">--.-</div>
+          <div class="freq-unit">MHz</div>
+        </div>
+        <div class="lamps">
+          <div class="lamp-row"><span class="lamp lamp-power" id="lampPower"></span>POWER</div>
+          <div class="lamp-row"><span class="lamp lamp-signal" id="lampSignal"></span>SIGNAL</div>
+          <div class="lamp-row"><span class="lamp lamp-air" id="lampAir"></span>ON AIR</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VU meters + now playing -->
+    <section class="meter-row">
+      <div class="vu" id="vuL">
+        <svg viewBox="0 0 120 70" aria-hidden="true">
+          <path d="M10 62 A52 52 0 0 1 110 62" fill="none" class="vu-arc"/>
+          <g class="vu-ticks"></g>
+          <text x="18" y="66" class="vu-txt">-20</text>
+          <text x="55" y="26" class="vu-txt">0</text>
+          <text x="94" y="66" class="vu-txt">+3</text>
+          <line x1="60" y1="64" x2="60" y2="22" class="vu-needle" id="needleL"/>
+        </svg>
+        <span class="vu-label">L</span>
+      </div>
+
+      <div class="now-playing">
+        <div class="np-logo-wrap"><img id="npLogo" alt="" hidden><div class="np-fallback" id="npFallback">TA</div></div>
+        <div class="np-meta">
+          <div class="np-caption">NOW PLAYING</div>
+          <div class="np-name" id="npName"><span class="np-marquee">TUNE A STATION</span></div>
+          <div class="np-tags"><span class="np-genre" id="npGenre">—</span><span class="np-status" id="npStatus">STANDBY</span></div>
+        </div>
+      </div>
+
+      <div class="vu" id="vuR">
+        <svg viewBox="0 0 120 70" aria-hidden="true">
+          <path d="M10 62 A52 52 0 0 1 110 62" fill="none" class="vu-arc"/>
+          <g class="vu-ticks"></g>
+          <text x="18" y="66" class="vu-txt">-20</text>
+          <text x="55" y="26" class="vu-txt">0</text>
+          <text x="94" y="66" class="vu-txt">+3</text>
+          <line x1="60" y1="64" x2="60" y2="22" class="vu-needle" id="needleR"/>
+        </svg>
+        <span class="vu-label">R</span>
+      </div>
+    </section>
+
+    <!-- Transport controls -->
+    <section class="controls">
+      <button class="btn btn-round" id="btnPrev" title="Previous station (←)">◄◄</button>
+
+      <button class="switch" id="btnPlay" title="Play / Pause (Space)">
+        <span class="switch-plate"><span class="switch-knob" id="switchKnob"></span></span>
+        <span class="switch-label" id="playLabel">PLAY</span>
+      </button>
+
+      <button class="btn btn-round" id="btnNext" title="Next station (→)">►►</button>
+
+      <div class="knob-zone" title="Volume — drag to turn (↑ / ↓)">
+        <div class="knob" id="volKnob">
+          <span class="knob-pointer" id="knobPointer"></span>
+          <span class="knob-cap"></span>
+        </div>
+        <span class="knob-label">VOLUME <b id="volValue">70</b></span>
+      </div>
+
+      <button class="btn btn-square" id="btnMute" title="Mute (M)">MUTE</button>
+      <button class="btn btn-square btn-star" id="btnFav" title="Favorite this station (S)">☆</button>
+
+      <div class="share-zone">
+        <button class="btn btn-square" id="btnShare" title="Share this station">SHARE</button>
+        <div class="share-menu" id="shareMenu" hidden>
+          <a id="shWhatsApp" target="_blank" rel="noopener">WhatsApp</a>
+          <a id="shTelegram" target="_blank" rel="noopener">Telegram</a>
+          <a id="shX" target="_blank" rel="noopener">X / Twitter</a>
+          <button type="button" id="shCopy">Copy link</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Presets -->
+    <section class="presets">
+      <span class="presets-cap">PRESETS</span>
+      <div class="preset-strip" id="presetStrip"></div>
+      <span class="presets-cap right">BAND · FM</span>
+    </section>
+  </div>
+
+  <!-- ==================== STATION LIBRARY ==================== -->
+  <section class="library">
+    <div class="lib-head">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="search" type="search" placeholder="Search 548 Tamil FM stations…" autocomplete="off">
+      </div>
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-tab="all">ALL <b id="cntAll">0</b></button>
+        <button class="tab" data-tab="fav">★ FAVS <b id="cntFav">0</b></button>
+        <button class="tab" data-tab="recent">⟲ RECENT <b id="cntRecent">0</b></button>
+      </div>
+      <div class="lib-count" id="libCount"></div>
+    </div>
+
+    <div class="station-grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>No stations match your search.</div>
+
+    <footer class="foot">
+      Station data &amp; logos from <a href="https://www.tamilradios.com" target="_blank" rel="noopener">tamilradios.com</a> ·
+      keyboard: <kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> station · <kbd>↑</kbd><kbd>↓</kbd> volume · <kbd>M</kbd> mute · <kbd>S</kbd> fav
+    </footer>
+  </section>
+</div>
+
+<audio id="audio" preload="none"></audio>
+<script src="stations.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

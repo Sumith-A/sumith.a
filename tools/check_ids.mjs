@@ -1,0 +1,10 @@
+import fs from "node:fs";
+const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+const js = fs.readFileSync(new URL("../app.js", import.meta.url), "utf8");
+const ids = [...js.matchAll(/\$\("([^"]+)"\)|getElementById\("([^"]+)"\)/g)].map((m) => m[1] || m[2]);
+const missing = [...new Set(ids)].filter((id) => !html.includes(`id="${id}"`));
+console.log(missing.length ? "MISSING IDS: " + missing.join(", ") : "all DOM ids present");
+const css = fs.readFileSync(new URL("../style.css", import.meta.url), "utf8");
+const classes = [...js.matchAll(/classList\.(?:add|toggle|remove)\("([a-z-]+)"/g)].map((m) => m[1]);
+const missCls = [...new Set(classes)].filter((c) => !css.includes("." + c));
+console.log(missCls.length ? "classes not in css (ok if transient): " + missCls.join(", ") : "all toggled classes styled");
